@@ -38,7 +38,6 @@ function inRange(location) {
 
 function knightMoves(start, end) {
   if (!inRange(start) || !inRange(end)) {
-
     throw new Error("Location out of range");
   }
 
