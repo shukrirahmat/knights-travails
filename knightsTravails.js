@@ -1,33 +1,32 @@
 function Movement(location, path) {
   const x = location[0];
   const y = location[1];
-  const nextMoveList = getNextMoveList();
 
-  function getNextMoveList() {
-    const result = [];
-    const operations = [
-      [2, 1],
-      [2, -1],
-      [-2, 1],
-      [-2, -1],
-      [1, 2],
-      [1, -2],
-      [-1, 2],
-      [-1, -2],
-    ];
+  return { x, y, path};
+}
 
-    operations.forEach((op) => {
-      const nextX = x + op[0];
-      const nextY = y + op[1];
-      if (nextX < 8 && nextY < 8 && nextX >= 0 && nextY >= 0) {
-        result.push([nextX, nextY]);
-      }
-    });
+function getNextMoveList(movement) {
+  const result = [];
+  const operations = [
+    [2, 1],
+    [2, -1],
+    [-2, 1],
+    [-2, -1],
+    [1, 2],
+    [1, -2],
+    [-1, 2],
+    [-1, -2],
+  ];
 
-    return result;
-  }
+  operations.forEach((op) => {
+    const nextX = movement.x + op[0];
+    const nextY = movement.y + op[1];
+    if (nextX < 8 && nextY < 8 && nextX >= 0 && nextY >= 0) {
+      result.push([nextX, nextY]);
+    }
+  });
 
-  return { x, y, path, nextMoveList };
+  return result;
 }
 
 function inRange(location) {
@@ -47,7 +46,7 @@ function knightMoves(start, end) {
   queue.push(startingMove);
 
   while (queue[0].x !== end[0] || queue[0].y !== end[1]) {
-    const nextList = queue[0].nextMoveList;
+    const nextList = getNextMoveList(queue[0]);
     nextList.forEach((next) => {
       const nextPath = [...queue[0].path, next];
       const nextMove = Movement(next, nextPath);
